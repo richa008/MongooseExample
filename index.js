@@ -11,26 +11,24 @@ const connect = mongoose.connect(url, {
 connect.then((db) => {
     console.log('Connected correctly to server');
     
-    const newDish = Dishes({
-        name: "Pizza",
-        description: "test"
-    });
-
-    newDish.save()
+    Dishes.create({
+        name: 'Pizza',
+        description: 'Test'
+    })
     .then((dish) => {
         console.log(dish);
-
-        return Dishes.find({});
+        
+        return Dishes.find({}).exec();
     })
     .then((dishes) => {
         console.log(dishes);
 
-        return Dishes.deleteMany({});
+        return Dishes.remove({});
     })
     .then(() => {
-        mongoose.connection.close();
+        return mongoose.connection.close();
     })
-    .catch((error) => {
-        console.log(error);
+    .catch((err) => {
+        console.log(err);
     });
 });
